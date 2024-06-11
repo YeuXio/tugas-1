@@ -1,0 +1,61 @@
+def hitung_rata_rata(nilai):
+    # Menghitung rata-rata dari nilai yang diberikan
+    if len(nilai) == 0:
+        return 0
+    else:
+        return sum(nilai) / len(nilai)
+
+def tampilkan_data_mahasiswa(mahasiswa):
+    print("\nData mahasiswa:")
+    for nama, data in mahasiswa.items():
+        print("Nama:", nama)
+        print("NIM:", data['nim'])
+        print("Prodi:", data['prodi'])
+        print("Nilai:", data['nilai'])
+        print()
+
+def tambah_mahasiswa(mahasiswa):
+    nama = input("Masukkan nama mahasiswa: ")
+    nim = input("Masukkan NIM: ")
+    prodi = input("Masukkan prodi: ")
+    nilai_str = input("Masukkan nilai mahasiswa (pisahkan dengan koma): ")
+    
+    # Memisahkan nilai-nilai yang dimasukkan oleh pengguna menjadi list
+    nilai_list = nilai_str.split(',')
+    
+    # Mengubah nilai-nilai menjadi bilangan float
+    nilai_float = [float(x) for x in nilai_list]
+    
+    # Menambahkan data mahasiswa ke dalam dictionary mahasiswa
+    mahasiswa[nama] = {'nim': nim, 'prodi': prodi, 'nilai': nilai_float}
+
+def bandingkan_nilai_rata_rata(mahasiswa):
+    # Mengumpulkan semua nilai dari semua mahasiswa
+    semua_nilai = [data['nilai'] for data in mahasiswa.values()]
+    
+    # Menghitung rata-rata nilai dari semua mahasiswa
+    rata_rata_semua = hitung_rata_rata([item for sublist in semua_nilai for item in sublist])
+    
+    print("Rata-rata nilai semua mahasiswa:", rata_rata_semua)
+    
+    # Mengurutkan mahasiswa berdasarkan nilai rata-rata mereka
+    sorted_mahasiswa = sorted(mahasiswa.items(), key=lambda x: hitung_rata_rata(x[1]['nilai']))
+    
+    print("\nPerbandingan nilai rata-rata mahasiswa:")
+    for nama, data in sorted_mahasiswa:
+        print("Nama:", nama)
+        print("Rata-rata nilai:", hitung_rata_rata(data['nilai']))
+        print()
+
+# Dictionary untuk menyimpan data mahasiswa
+mahasiswa = {}
+
+# Memanggil fungsi tambah_mahasiswa untuk menambahkan data mahasiswa
+tambah_mahasiswa(mahasiswa)
+tambah_mahasiswa(mahasiswa)
+
+# Memanggil fungsi untuk menampilkan data mahasiswa
+tampilkan_data_mahasiswa(mahasiswa)
+
+# Memanggil fungsi untuk membandingkan nilai rata-rata mahasiswa
+bandingkan_nilai_rata_rata(mahasiswa)
